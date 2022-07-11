@@ -1,0 +1,14 @@
+miner.setEtherbase(eth.accounts[0]);
+var bal1=eth.getBalance(eth.coinbase);
+var bal2=eth.getBalance(eth.accounts[1]);
+console.log('sender balance in ether: ', web3.fromWei(bal1,"ether"));
+console.log('receiver balance in ether: ', web3.fromWei(bal2,"ether"));
+h = eth.sendTransaction({from:eth.coinbase, to:eth.accounts[1],value:10000});
+console.log('...mining start');
+miner.start(1);admin.sleepBlocks(1);miner.stop();
+console.log('mining done...');
+var bal1new=eth.getBalance(eth.coinbase);
+var bal2new=eth.getBalance(eth.accounts[1]);
+console.log('- new sender balance in ether: ', web3.fromWei(bal1new,"ether"));
+console.log('- new receiver balance in ether: ', web3.fromWei(bal2new,"ether"));
+console.log('- used gas: ', eth.getTransactionReceipt(h).gasUsed);
